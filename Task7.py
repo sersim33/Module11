@@ -42,22 +42,33 @@ class Vector:
             return self.coordinates.x
         if index == 1:
             return self.coordinates.y
-        
-    # def __call__(self, value=None):
-    #     if value is not None:
-    #         return (self.coordinates.x * value, self.coordinates.y * value)
-    #     else:
-    #         return self.coordinates.x, self.coordinates.y
-    def __call__(self, value=None):
-        if value is not None:
-            return tuple(map(lambda coord: coord * value, (self.coordinates.x, self.coordinates.y)))
-        else:
-            return self.coordinates.x, self.coordinates.y
 
-             
+    def __call__(self, value=None):
+        if value:
+            self.coordinates.x = self.coordinates.x * value
+            self.coordinates.y = self.coordinates.y * value
+        return self.coordinates.x, self.coordinates.y
+
+    def __add__(self, vector):
+        x = self.coordinates.x + vector.coordinates.x
+        y = self.coordinates.y + vector.coordinates.y
+        return Vector(Point(x, y))
+
+    def __sub__(self, vector):
+        x = self.coordinates.x - vector.coordinates.x
+        y = self.coordinates.y - vector.coordinates.y
+        return Vector(Point(x, y))
+        
+        
     def __str__(self):
         return f"Vector({self.coordinates.x},{self.coordinates.y})"
+    
 
-vector = Vector(Point(1, 10))
-print(vector(4))
+vector1 = Vector(Point(1, 10))
+vector2 = Vector(Point(10, 17))
 
+vector3 = vector2 + vector1
+vector4 = vector2 - vector1
+
+print(vector3)  # Vector(11,20)
+print(vector4)  # Vector(9,0)
